@@ -30,8 +30,8 @@ public class LoginController {
     }
 
     @GetMapping("/hubAddress")
-    public Boolean hubAddressExists() {
-        return !this.loginHandler.getInternalipaddress().isEmpty();
+    public String hubAddressExists() {
+        return this.loginHandler.getInternalipaddress();
     }
 }
 
@@ -40,6 +40,7 @@ class LoginHandler {
 
     private final WebClient webClient;
     private String internalipaddress;
+    private String resp = "[{\"id\":\"ecb5fafffe3045d0\",\"internalipaddress\":\"192.168.1.198\",\"port\":\"443\"}]";
 
 
     public LoginHandler(WebClient.Builder webClientBuilder) {
