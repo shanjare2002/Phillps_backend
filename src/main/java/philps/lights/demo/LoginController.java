@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/api")
 public class LoginController {
     private final LoginHandler loginHandler;
+
     @GetMapping("/hubAddress")
     public String hubAddressExists() {
         return this.loginHandler.getInternalipaddress();
