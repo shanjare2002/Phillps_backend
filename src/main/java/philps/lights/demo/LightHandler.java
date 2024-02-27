@@ -28,8 +28,10 @@ public class LightHandler {
     private final ObjectMapper objectMapper;
     private JsonNode lightList;
     private final String userPath  = "src/main/java/philps/lights/demo/userHandler.json";
-    
+    private String username;
+
     public LightHandler(LoginHandler loginHandler) throws IOException {
+        this.loginHandler = loginHandler;
         this.objectMapper =  new ObjectMapper();
         this.lightList = this.objectMapper.createObjectNode();
         readHandleUserFile();
@@ -68,7 +70,7 @@ public class LightHandler {
         }
         String response;
         try {
-           response = this.webClient.get()
+            response = this.webClient.get()
                     .uri("/clip/v2/resource/device")
                     .header("hue-application-key", this.username)
                     .retrieve()
@@ -82,15 +84,15 @@ public class LightHandler {
         this.lightList = this.objectMapper.readTree(response);
         return this.lightList.get("errors").isEmpty();
     }
-        private void readHandleUserFile() throws IOException {
-            File jsonFile = new File(this.userPath);
-            JsonNode jsonNode = this.objectMapper.readTree(jsonFile);
-            this.username = jsonNode.get("username").asText();
-        }
-        private void writeHandleUserFile() throws IOException {
-            File jsonFile = new File(this.userPath);
-            JsonNode jsonNode = this.objectMapper.readTree(jsonFile);
-            ((ObjectNode) jsonNode).put("username", this.username);
-            this.objectMapper.writeValue(jsonFile, jsonNode);
-        }
+    private void readHandleUserFile() throws IOException {
+        File jsonFile = new File(this.userPath);
+        JsonNode jsonNode = this.objectMapper.readTree(jsonFile);
+        this.username = jsonNode.get("username").asText();
+    }
+    private void writeHandleUserFile() throws IOException {
+        File jsonFile = new File(this.userPath);
+        JsonNode jsonNode = this.objectMapper.readTree(jsonFile);
+        ((ObjectNode) jsonNode).put("username", this.username);
+        this.objectMapper.writeValue(jsonFile, jsonNode);
+    }
 }

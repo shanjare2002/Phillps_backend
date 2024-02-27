@@ -21,5 +21,5 @@ public class LightController {
         return this.lightHandler.tryLogin();
     }
 
+
 }
-//this.webClient = webClientBuilder.baseUrl("http://192.168.1.198/api").build();
